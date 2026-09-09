@@ -36,7 +36,7 @@ The complete analysis is available in the [Jupyter notebook](Netflix_Movies_and_
 
 The project uses the following dataset:
 
-**File name:** [NETFLIX MOVIES AND TV SHOWS CLUSTERING.csv](NETFLIX MOVIES AND TV SHOWS CLUSTERING.CSV)
+**File :** [NETFLIX MOVIES AND TV SHOWS CLUSTERING.CSV](https://github.com/Chayan280/netflix_movie_and_tv_shows_clustering/blob/main/NETFLIX%20MOVIES%20AND%20TV%20SHOWS%20CLUSTERING.csv)
 
 The dataset was sourced from **Flixable**, a third-party Netflix search engine, and contains Netflix catalog information up to 2019.
 
