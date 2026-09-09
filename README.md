@@ -34,9 +34,17 @@ The complete analysis is available in the [Jupyter notebook](Netflix_Movies_and_
 
 ## Dataset
 
-The dataset was sourced from **Flixable**, a third-party Netflix search engine. It contains catalog information up to 2019, including:
+The project uses the following dataset:
+
+**File name:** `NETFLIX MOVIES AND TV SHOWS CLUSTERING.csv`
+
+The dataset was sourced from **Flixable**, a third-party Netflix search engine, and contains Netflix catalog information up to 2019.
+
+### Dataset Features
 
 `show_id`, `type`, `title`, `director`, `cast`, `country`, `date_added`, `release_year`, `rating`, `duration`, `listed_in`, and `description`.
+
+The dataset contains **7,787 rows** and **12 columns**. The CSV file is not currently included in this repository; place it in the project directory before running the notebook. Update the notebook's `pd.read_csv()` path if the file is stored in another location.
 
 ## Tools and Libraries
 
