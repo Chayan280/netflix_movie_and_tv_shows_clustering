@@ -5,7 +5,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-# Streamlit ke purane aur naye dono versions ke liye compatible
+# Compatible with both older and newer Streamlit versions
 _v = tuple(int(x) for x in st.__version__.split(".")[:2])
 W = {"width": "stretch"} if _v >= (1, 50) else {"use_container_width": True}
 
@@ -51,7 +51,7 @@ st.title("Netflix Movies & TV Shows Clustering")
 st.caption("TF-IDF + metadata features → PCA (90% variance) → K-Means (K=4)")
 
 if f.empty:
-    st.warning("Is filter ke saath koi title nahi mila. Filters thode loose karo.")
+    st.warning("No titles match the current filters. Try loosening them.")
     st.stop()
 
 c1, c2, c3, c4 = st.columns(4)
@@ -80,7 +80,7 @@ with tab1:
 
 # ---------- Cluster map ----------
 with tab2:
-    st.write("Har dot ek title hai. Mouse le jao to title, genre aur rating dikhega.")
+    st.write("Each dot is one title. Hover to see its title, genre and rating.")
     sample = f if len(f) <= 4000 else f.sample(4000, random_state=1)
     st.plotly_chart(px.scatter(sample, x="pc1", y="pc2", color="cluster_name", symbol="type",
                                hover_name="title", hover_data=["listed_in", "rating", "release_year"],
@@ -90,11 +90,11 @@ with tab2:
 
 # ---------- Cluster profiles ----------
 with tab3:
-    pick = st.selectbox("Cluster chuno", order)
+    pick = st.selectbox("Select a cluster", order)
     cid = pick.split()[-1]
     sub = f[f["cluster_name"] == pick]
     if sub.empty:
-        st.info("Current filters has no titles in this cluster.")
+        st.info("No titles from this cluster match the current filters.")
     else:
         l, r = st.columns(2)
         with l:
@@ -102,7 +102,7 @@ with tab3:
             if cid in cluster_terms:
                 st.write(", ".join(cluster_terms[cid]))
             else:
-                st.caption("cluster_info.json nahi mila.")
+                st.caption("cluster_info.json not found.")
             st.subheader("Quick facts")
             st.write(f"- Titles: **{len(sub):,}**")
             st.write(f"- Avg release year: **{sub['release_year'].mean():.0f}**")
@@ -121,8 +121,8 @@ with tab3:
 with tab4:
     show = ["title", "type", "cluster", "listed_in", "country", "rating", "release_year"]
     st.dataframe(f[show].sort_values(["cluster", "title"]), **W, height=380)
-    st.download_button("Filtered data CSV download karo", f[show].to_csv(index=False), "filtered_titles.csv")
-    t = st.selectbox("Title detail dekho", f["title"].sort_values().unique())
+    st.download_button("Download filtered data as CSV", f[show].to_csv(index=False), "filtered_titles.csv")
+    t = st.selectbox("View title details", f["title"].sort_values().unique())
     row = f[f["title"] == t].iloc[0]
     st.markdown(f"**{row['title']}** ({row['release_year']}, {row['rating']}) → **{row['cluster_name']}**")
     st.write(row["description"])
@@ -138,4 +138,4 @@ with tab5:
         st.write(f"Rows: **{metrics['rows']:,}**, features: **{metrics['features']:,}**, "
                  f"PCA components: **{metrics['pca_components']}**")
     else:
-        st.info("cluster_info.json nahi mila, scores skip.")
+        st.info("cluster_info.json not found; skipping model scores.")

@@ -1,8 +1,15 @@
 """
-Ek baar chalao: raw CSV -> clustering -> netflix_clustered.csv + cluster_terms.json
-Notebook ka pipeline same hai: dropna -> features -> TF-IDF -> scale -> PCA(90%) -> KMeans(k=4)
+Run once: raw CSV -> clustering -> netflix_clustered.csv + cluster_info.json
+
+Usage:
+    python prepare_data.py [path_to_raw_csv]
+
+Mirrors the notebook pipeline:
+dropna -> feature engineering -> TF-IDF -> scaling -> PCA (90% variance) -> K-Means (K=4)
 """
-import json, re
+import json
+import re
+import sys
 import numpy as np
 import pandas as pd
 import nltk
@@ -18,9 +25,10 @@ for pkg in ("stopwords", "wordnet"):
     nltk.download(pkg, quiet=True)
 
 K = 4
-raw = pd.read_csv("netflix_titles.csv")
+RAW_PATH = sys.argv[1] if len(sys.argv) > 1 else "netflix_titles.csv"
+raw = pd.read_csv(RAW_PATH)
 data = raw.dropna().copy()                      # notebook: data.dropna(inplace=True)
-original = data.copy()                          # display ke liye original columns bacha lo
+original = data.copy()                          # keep the original readable columns for display
 
 # --- date features ---
 data["date_added"] = pd.to_datetime(data["date_added"].str.strip(), errors="coerce")
@@ -92,7 +100,7 @@ metrics = {
     "davies_bouldin": float(davies_bouldin_score(pcs, labels)),
 }
 
-# --- top TF-IDF terms per cluster (cluster ko naam dene ke liye) ---
+# --- top TF-IDF terms per cluster (helps interpret each cluster) ---
 cluster_terms = {}
 tm = tfidf_matrix.tocsr()
 for c in range(K):
