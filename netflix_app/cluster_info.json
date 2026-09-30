@@ -1,0 +1,60 @@
+{
+  "metrics": {
+    "rows": 4808,
+    "features": 3052,
+    "pca_components": 132,
+    "silhouette": 0.1198491736673742,
+    "calinski_harabasz": 569.7545251621227,
+    "davies_bouldin": 1.9725028903378787
+  },
+  "cluster_terms": {
+    "0": [
+      "life",
+      "man",
+      "young",
+      "woman",
+      "love",
+      "family",
+      "new",
+      "friend",
+      "father",
+      "home"
+    ],
+    "1": [
+      "life",
+      "young",
+      "new",
+      "love",
+      "woman",
+      "family",
+      "man",
+      "friend",
+      "world",
+      "girl"
+    ],
+    "2": [
+      "love",
+      "young",
+      "family",
+      "fall",
+      "life",
+      "man",
+      "woman",
+      "father",
+      "friend",
+      "new"
+    ],
+    "3": [
+      "school",
+      "life",
+      "series",
+      "student",
+      "special",
+      "world",
+      "family",
+      "group",
+      "girl",
+      "year"
+    ]
+  }
+}
